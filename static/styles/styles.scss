@@ -4,6 +4,10 @@ $lighter_colour: #E6D3AA;
 $link_colour: #1074B9;
 $shadow_colour: rgba(129, 65, 18, 0.4);
 
+%background-gradient {
+  background: linear-gradient($light_colour, $lighter_colour);
+}
+
 %center-flex {
   display: flex;
   justify-content: center;
@@ -12,6 +16,13 @@ $shadow_colour: rgba(129, 65, 18, 0.4);
 %pad-no-margin {
   padding: 8px;
   margin: 0;
+}
+
+%round-brown-border {
+  border: solid 1px $default_colour;
+  border-radius: 10px;
+  font-size: 20px;
+  line-height: 1.5;
 }
 
 %shadow {
@@ -50,14 +61,8 @@ body, button, .form-group a, ::placeholder {
 }
 
 button, .form-group a {
-  background: linear-gradient($light_colour, $lighter_colour);
-}
-
-button, .form-control, .form-group a {
-  border: solid 1px $default_colour;
-  border-radius: 10px;
-  font-size: 20px;
-  line-height: 1.5;
+  @extend %background-gradient;
+  @extend %round-brown-border;
 }
 
 button:focus, form button:hover, .form-control:focus, .form-group a:focus, .form-group a:hover {
@@ -75,6 +80,7 @@ div.header {
 
 div.info {
   margin: 50px 20px 20px;
+  color: $light_colour;
 }
 
 .form-control {
@@ -83,6 +89,7 @@ div.info {
   color: $default_colour;
   background-color: $lighter_colour;
   padding: 10px 5px;
+  @extend %round-brown-border;
 }
 
 .form-group {
@@ -90,9 +97,14 @@ div.info {
   a {
     display: block;
     @extend %pad-no-margin;
+    @extend %round-brown-border;
+    @extend %background-gradient;
   }
   .container:first-of-type {
     margin-top: 50px;
+  }
+  textarea {
+    padding: 10px;
   }
 }
 
@@ -205,5 +217,21 @@ li span {
       border-radius: 50%;
       background: white;
     }
+  }
+}
+
+.review {
+  @extend %round-brown-border;
+  margin: 20px;
+  padding: 10px;
+  display:flex;
+  font-size: 80%;
+  flex-direction: column;
+  .review-headline {
+    display:flex;
+    justify-content: space-between;
+  }
+  .review-text {
+    font-style: italic;
   }
 }

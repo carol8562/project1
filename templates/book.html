@@ -1,11 +1,15 @@
 {% extends "layout.html" %}
-{% block title %}Book details{% endblock %}
+{%- block title -%}
+  Book details
+{%- endblock -%}
 {% block header %}
   <form action="{{ url_for('index') }}">
       <button>Log out</button>
   </form>
 {% endblock %}
-{% block heading %}Greatreads&mdash;Book details{% endblock %}
+{%- block heading -%}
+  Greatreads&mdash;Book details
+{%- endblock -%}
 {% block body %}
   <div class="container">
     <ul>
@@ -54,37 +58,29 @@
     </div>
   </form>
 
-  {% if therearereviews %}
+  {%- if therearereviews -%}
 
     <h2>Reviews</h2>
-    {% for review_result in review_results %}
+    {%- for review_result in review_results -%}
       <div class="review">
-        <span class="review-stars">
-          {% if review_result.review.stars > 0 %}
-            &#x2605;
-          {% endif %}
-          {% if review_result.review.stars > 1 %}
-            &#x2605;
-          {% endif %}
-          {% if review_result.review.stars > 2 %}
-            &#x2605;
-          {% endif %}
-          {% if review_result.review.stars > 3 %}
-            &#x2605;
-          {% endif %}
-          {% if review_result.review.stars > 4 %}
-            &#x2605;
-          {% endif %}
-        </span>
+        <div class="review-headline">
+          <span class="review-stars">
+            {%- for i in range(review_result.review.stars) -%}
+              {%- if review_result.review.stars > i -%}
+                &#x2605;
+              {%- endif -%}
+            {%- endfor -%}
+          </span>
+          <span class="reviewer">
+            Review by {{ review_result.reviewer }}
+          </span>
+        </div>
         <span class="review-text">
           {{ review_result.review.review }}
         </span>
-        <span class="reviewer">
-          Review by {{ review_result.reviewer }}
-        </span>
       </div>
-    {% endfor %}
+    {%- endfor -%}
 
-  {% endif %}
+  {%- endif -%}
   <a class="return" href="{{ url_for('loginorsignup', login=login) }}">Return to {{"login" if login else "signup"}} page</a>
 {% endblock %}

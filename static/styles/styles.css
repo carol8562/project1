@@ -1,3 +1,7 @@
+button, .form-group a {
+  background: linear-gradient(#D3A469, #E6D3AA);
+}
+
 .radio-container, .container {
   display: flex;
   justify-content: center;
@@ -6,6 +10,13 @@
 form button, .form-group a {
   padding: 8px;
   margin: 0;
+}
+
+.review, .form-control, button, .form-group a {
+  border: solid 1px #814112;
+  border-radius: 10px;
+  font-size: 20px;
+  line-height: 1.5;
 }
 
 button:focus, form button:hover, .form-control:focus, .form-group a:focus, .form-group a:hover {
@@ -43,17 +54,6 @@ body, button, .form-group a, ::placeholder {
   font-family: Helvetica, Arial, sans-serif;
 }
 
-button, .form-group a {
-  background: linear-gradient(#D3A469, #E6D3AA);
-}
-
-button, .form-control, .form-group a {
-  border: solid 1px #814112;
-  border-radius: 10px;
-  font-size: 20px;
-  line-height: 1.5;
-}
-
 div.header {
   display: flex;
   justify-content: flex-end;
@@ -61,6 +61,7 @@ div.header {
 
 div.info {
   margin: 50px 20px 20px;
+  color: #D3A469;
 }
 
 .form-control {
@@ -79,6 +80,9 @@ div.info {
 }
 .form-group .container:first-of-type {
   margin-top: 50px;
+}
+.form-group textarea {
+  padding: 10px;
 }
 
 h1, h2 {
@@ -177,6 +181,21 @@ li span {
   height: 5px;
   border-radius: 50%;
   background: white;
+}
+
+.review {
+  margin: 20px;
+  padding: 10px;
+  display: flex;
+  font-size: 80%;
+  flex-direction: column;
+}
+.review .review-headline {
+  display: flex;
+  justify-content: space-between;
+}
+.review .review-text {
+  font-style: italic;
 }
 
 /*# sourceMappingURL=styles.css.map */
