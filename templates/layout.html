@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock %}&mdash;Greatreads</title>
+    <link type= "text/css" rel = 'stylesheet' href="{{ url_for('static',filename='styles/styles.css') }}">
+  </head>
+  <body>
+    <div class='header'>{% block header %}{% endblock %}</div>
+    <h1>{% block heading %}{% endblock %}</h1>
+    {% block body %}{% endblock %}
+  </body>
+</html>

@@ -1,0 +1,182 @@
+.radio-container, .container {
+  display: flex;
+  justify-content: center;
+}
+
+form button, .form-group a {
+  padding: 8px;
+  margin: 0;
+}
+
+button:focus, form button:hover, .form-control:focus, .form-group a:focus, .form-group a:hover {
+  outline: none;
+  box-shadow: 0 0 0 2pt #D3A469;
+  box-shadow: 4px 4px 4px rgba(129, 65, 18, 0.4);
+  -moz-box-shadow: 4px 4px 4px rgba(129, 65, 18, 0.4);
+  -webkit-box-shadow: 4px 4px 4px rgba(129, 65, 18, 0.4);
+}
+
+* {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+a {
+  display: block;
+  color: #D3A469;
+  text-decoration: none;
+  line-height: 1.5;
+}
+
+a:hover {
+  color: #1074B9;
+}
+
+a.return {
+  margin: 50px 20px 20px;
+}
+
+body, button, .form-group a, ::placeholder {
+  color: #814112;
+  font-family: Helvetica, Arial, sans-serif;
+}
+
+button, .form-group a {
+  background: linear-gradient(#D3A469, #E6D3AA);
+}
+
+button, .form-control, .form-group a {
+  border: solid 1px #814112;
+  border-radius: 10px;
+  font-size: 20px;
+  line-height: 1.5;
+}
+
+div.header {
+  display: flex;
+  justify-content: flex-end;
+}
+
+div.info {
+  margin: 50px 20px 20px;
+}
+
+.form-control {
+  display: block;
+  width: 100%;
+  color: #814112;
+  background-color: #E6D3AA;
+  padding: 10px 5px;
+}
+
+.form-group {
+  margin: 20px;
+}
+.form-group a {
+  display: block;
+}
+.form-group .container:first-of-type {
+  margin-top: 50px;
+}
+
+h1, h2 {
+  text-align: center;
+  line-height: 1.2;
+  font-weight: normal;
+}
+
+li {
+  color: #D3A469;
+}
+
+li span {
+  color: #814112;
+}
+
+::placeholder {
+  opacity: 0.5;
+}
+
+.radio-container {
+  /* From: https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_custom_radio */
+}
+.radio-container .radio-button-container {
+  position: relative;
+  display: flex;
+  padding: 10px 5px;
+  margin: 0 10px;
+  cursor: pointer;
+  font-size: 70%;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  color: #E6D3AA;
+  /* Hide the browser's default radio button */
+  /* Create a custom radio button */
+  /* Create a custom radio button */
+  /* On mouse-over, darken color and background color */
+  /* When the radio button is checked, change color and background color to $default_colour */
+  /* Create the indicator (the dot/circle - hidden when not checked) */
+  /* Show the indicator (dot/circle) when checked */
+  /* Style the indicator (dot/circle) */
+}
+.radio-container .radio-button-container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+}
+.radio-container .radio-button-container span.checkmark {
+  position: absolute;
+  left: -20px;
+  top: 8px;
+  display: inline-block;
+  height: 15px;
+  width: 15px;
+  margin: 5px;
+  background-color: #E6D3AA;
+  border-radius: 50%;
+}
+.radio-container .radio-button-container span.checkmark {
+  position: absolute;
+  left: -20px;
+  top: 8px;
+  display: inline-block;
+  height: 15px;
+  width: 15px;
+  margin: 5px;
+  background-color: #E6D3AA;
+  border-radius: 50%;
+}
+.radio-container .radio-button-container:hover {
+  color: #D3A469;
+}
+.radio-container .radio-button-container:hover input ~ .checkmark {
+  background-color: #D3A469;
+}
+.radio-container .radio-button-container input:checked ~ .checkmark {
+  background-color: #814112;
+}
+.radio-container .radio-button-container input:checked ~ span {
+  color: #814112;
+}
+.radio-container .radio-button-container .checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+.radio-container .radio-button-container input:checked ~ .checkmark:after {
+  display: block;
+}
+.radio-container .radio-button-container .checkmark:after {
+  top: 5px;
+  left: 5px;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: white;
+}
+
+/*# sourceMappingURL=styles.css.map */

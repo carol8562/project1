@@ -1,0 +1,19 @@
+{% extends "layout.html" %}
+{% block title %}
+  Login/Signup
+{% endblock %}
+{% block heading %}
+  Log in or sign up to Greatreads
+{% endblock %}
+{% block body %}
+<div class='form-group container'>
+  <a href = "{{ url_for('loginorsignup', login=True)}}">
+    Log in
+  </a>
+</div>
+<div class='form-group container'>
+  <a href = "{{ url_for('loginorsignup', login=False)}}">
+    Sign up
+  </a>
+</div>
+{% endblock %}

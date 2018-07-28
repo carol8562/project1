@@ -1,0 +1,9 @@
+{% extends "layout.html" %}
+{% block title %}Error{% endblock %}
+{% block heading %}Error{% endblock %}
+{% block body %}
+  <div class="container">
+    {{ message }}
+  </div>
+  <a class="return" href="{{ url_for('loginorsignup', login=login) }}">Return to {{"login" if login else "signup"}} page</a>
+{% endblock %}

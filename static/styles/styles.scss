@@ -1,0 +1,209 @@
+$default_colour: #814112;
+$light_colour: #D3A469;
+$lighter_colour: #E6D3AA;
+$link_colour: #1074B9;
+$shadow_colour: rgba(129, 65, 18, 0.4);
+
+%center-flex {
+  display: flex;
+  justify-content: center;
+}
+
+%pad-no-margin {
+  padding: 8px;
+  margin: 0;
+}
+
+%shadow {
+  outline: none;
+  box-shadow: 0 0 0 2pt $light_colour;
+  box-shadow: 4px 4px 4px $shadow_colour;
+  -moz-box-shadow: 4px 4px 4px $shadow_colour;
+  -webkit-box-shadow: 4px 4px 4px $shadow_colour;
+}
+
+* {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+a {
+  display: block;
+  color: $light_colour;
+  text-decoration: none;
+  line-height: 1.5;
+}
+
+a:hover {
+  color: $link_colour;
+}
+
+a.return {
+  margin: 50px 20px 20px;
+}
+
+body, button, .form-group a, ::placeholder {
+  color: $default_colour;
+  font-family: Helvetica, Arial, sans-serif;
+}
+
+button, .form-group a {
+  background: linear-gradient($light_colour, $lighter_colour);
+}
+
+button, .form-control, .form-group a {
+  border: solid 1px $default_colour;
+  border-radius: 10px;
+  font-size: 20px;
+  line-height: 1.5;
+}
+
+button:focus, form button:hover, .form-control:focus, .form-group a:focus, .form-group a:hover {
+  @extend %shadow;
+}
+
+.container {
+  @extend %center-flex;
+}
+
+div.header {
+  display: flex;
+  justify-content: flex-end;
+}
+
+div.info {
+  margin: 50px 20px 20px;
+}
+
+.form-control {
+  display:block;
+  width: 100%;
+  color: $default_colour;
+  background-color: $lighter_colour;
+  padding: 10px 5px;
+}
+
+.form-group {
+  margin: 20px;
+  a {
+    display: block;
+    @extend %pad-no-margin;
+  }
+  .container:first-of-type {
+    margin-top: 50px;
+  }
+}
+
+form button {
+  @extend %pad-no-margin;
+}
+
+h1, h2 {
+  text-align: center;
+  line-height: 1.2;
+  font-weight: normal;
+}
+
+li {
+  color: $light_colour;
+}
+
+li span {
+  color: $default_colour;
+}
+
+::placeholder {
+  opacity: 0.5;
+}
+
+.radio-container {
+  @extend %center-flex;
+  /* From: https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_custom_radio */
+  .radio-button-container {
+    position: relative;
+    display: flex;
+    padding: 10px 5px;
+    margin: 0 10px;
+    cursor: pointer;
+    font-size: 70%;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    color: $lighter_colour;
+    /* Hide the browser's default radio button */
+    input {
+      position: absolute;
+      opacity: 0;
+      cursor: pointer;
+    }
+
+    /* Create a custom radio button */
+    span.checkmark {
+        position: absolute;
+        left: -20px;
+        top: 8px;
+        display: inline-block;
+        height: 15px;
+        width: 15px;
+        margin: 5px;
+        background-color: $lighter_colour;
+        border-radius: 50%;
+    }
+
+    /* Create a custom radio button */
+    span.checkmark {
+        position: absolute;
+        left: -20px;
+        top: 8px;
+        display: inline-block;
+        height: 15px;
+        width: 15px;
+        margin: 5px;
+        background-color: $lighter_colour;
+        border-radius: 50%;
+    }
+
+    /* On mouse-over, darken color and background color */
+    &:hover {
+      color: $light_colour;
+    }
+
+    &:hover input ~ .checkmark {
+      background-color: $light_colour;
+    }
+
+    /* When the radio button is checked, change color and background color to $default_colour */
+    input:checked ~ .checkmark {
+      background-color: $default_colour;
+    }
+
+    input:checked ~ span {
+      color: $default_colour;
+    }
+
+    /* Create the indicator (the dot/circle - hidden when not checked) */
+    .checkmark:after {
+      content: "";
+      position: absolute;
+      display: none;
+    }
+
+    /* Show the indicator (dot/circle) when checked */
+    input:checked ~ .checkmark:after {
+      display: block;
+    }
+
+    /* Style the indicator (dot/circle) */
+    .checkmark:after {
+      top: 5px;
+      left: 5px;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: white;
+    }
+  }
+}

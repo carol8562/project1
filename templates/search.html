@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+{% block title %}Book search{% endblock %}
+{% block header %}
+  <form action="{{ url_for('index') }}">
+      <button>Log out</button>
+  </form>
+{% endblock %}
+{% block heading %}
+  Greatreads Book Search
+{% endblock %}
+{% block body %}
+  <form action="{{ url_for('search_results') }}" method="post">
+    <div class="form-group">
+      <input class="form-control" type="text" name="isbn" placeholder="Enter the book's ISBN and/or...">
+    </div>
+    <div class="form-group">
+      <input class="form-control" type="text" name="title" placeholder="Enter the book's title and/or...">
+    </div>
+    <div class="form-group">
+      <input class="form-control" type="text" name="author" placeholder="Enter the book's author" value="Blake">
+    </div>
+    <div class="form-group container">
+      <button>Search</button>
+    </div>
+  </form>
+{% endblock %}

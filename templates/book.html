@@ -1,0 +1,90 @@
+{% extends "layout.html" %}
+{% block title %}Book details{% endblock %}
+{% block header %}
+  <form action="{{ url_for('index') }}">
+      <button>Log out</button>
+  </form>
+{% endblock %}
+{% block heading %}Greatreads&mdash;Book details{% endblock %}
+{% block body %}
+  <div class="container">
+    <ul>
+      <li>Title: <span>{{ book[1] }}</span></li>
+      <li>Author: <span>{{ book[2] }}</span></li>
+      <li>Publication year: <span>{{ book[3] }}</span></li>
+      <li>ISBN: <span>{{ book[0] }}</span></li>
+    </ul>
+  </div>
+  <form action="{{ url_for('book', isbn=book[0]) }}" method="post">
+    <div class="info">
+      Choose a star rating for <i>{{ book[1] }}</i> by {{ book[2] }}
+    </div>
+    <div class="form-group radio-container">
+      <label class="radio-button-container">
+        <input type="radio" name="radio">
+        <span class="checkmark"></span>
+        <span>&#x2605;</span>
+      </label>
+      <label class="radio-button-container">
+        <input type="radio" name="radio">
+        <span class="checkmark"></span>
+        <span>&#x2605;&#x2605;</span>
+      </label>
+      <label class="radio-button-container">
+        <input type="radio" name="radio">
+        <span class="checkmark"></span>
+        <span>&#x2605;&#x2605;&#x2605;</span>
+      </label>
+      <label class="radio-button-container">
+        <input type="radio" name="radio">
+        <span class="checkmark"></span>
+        <span>&#x2605;&#x2605;&#x2605;&#x2605;</span>
+      </label>
+      <label class="radio-button-container">
+        <input type="radio" name="radio">
+        <span class="checkmark"></span>
+        <span>&#x2605;&#x2605;&#x2605;&#x2605;&#x2605;</span>
+      </label>
+    </div>
+    <div class="form-group">
+      <textarea class="form-control" name="review" placeholder="Enter your review of '{{ book[1] }}'..."></textarea>
+    </div>
+    <div class="form-group container">
+      <button>Submit</button>
+    </div>
+  </form>
+
+  {% if therearereviews %}
+
+    <h2>Reviews</h2>
+    {% for review_result in review_results %}
+      <div class="review">
+        <span class="review-stars">
+          {% if review_result.review.stars > 0 %}
+            &#x2605;
+          {% endif %}
+          {% if review_result.review.stars > 1 %}
+            &#x2605;
+          {% endif %}
+          {% if review_result.review.stars > 2 %}
+            &#x2605;
+          {% endif %}
+          {% if review_result.review.stars > 3 %}
+            &#x2605;
+          {% endif %}
+          {% if review_result.review.stars > 4 %}
+            &#x2605;
+          {% endif %}
+        </span>
+        <span class="review-text">
+          {{ review_result.review.review }}
+        </span>
+        <span class="reviewer">
+          Review by {{ review_result.reviewer }}
+        </span>
+      </div>
+    {% endfor %}
+
+  {% endif %}
+  <a class="return" href="{{ url_for('loginorsignup', login=login) }}">Return to {{"login" if login else "signup"}} page</a>
+{% endblock %}
