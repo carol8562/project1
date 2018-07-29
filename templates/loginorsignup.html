@@ -1,10 +1,11 @@
 {% extends "layout.html" %}
 {% block title %}{{"Log in" if login else "Sign up"}}{% endblock %}
+{%- block header -%}{%- endblock -%}
 {% block heading %}
   {{ "Log in to" if login else "Sign up for"}} Greatreads
 {% endblock %}
 {% block body %}
-<form action="{{ url_for('search', login=login) }}" method="post">
+<form action="{{ url_for('login', login=login) }}" method="post">
   <div class="form-group">
     <input value="Blake" class="form-control" type="text" name="name" placeholder="Enter your username">
   </div>
@@ -15,4 +16,5 @@
     <button>{{"Log in" if login else "Sign up"}}</button>
   </div>
 </form>
+<a class="return" href="{{ url_for('index') }}">Return to front page</a>
 {% endblock %}

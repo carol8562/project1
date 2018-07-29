@@ -1,10 +1,8 @@
 {% extends "layout.html" %}
 {% block title %}Book search{% endblock %}
-{% block header %}
-  <form action="{{ url_for('index') }}">
-      <button>Log out</button>
-  </form>
-{% endblock %}
+{%- block headier -%}
+  {{ super() }}
+{%- endblock -%}
 {% block heading %}
   Greatreads Book Search
 {% endblock %}

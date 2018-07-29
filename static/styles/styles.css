@@ -9,7 +9,7 @@ button, .form-group a {
 
 form button, .form-group a {
   padding: 8px;
-  margin: 0;
+  margin: 0 10px;
 }
 
 .review, .form-control, button, .form-group a {
@@ -109,7 +109,7 @@ li span {
 .radio-container .radio-button-container {
   position: relative;
   display: flex;
-  padding: 10px 5px;
+  padding: 0 5px;
   margin: 0 10px;
   cursor: pointer;
   font-size: 70%;
@@ -120,7 +120,6 @@ li span {
   color: #E6D3AA;
   /* Hide the browser's default radio button */
   /* Create a custom radio button */
-  /* Create a custom radio button */
   /* On mouse-over, darken color and background color */
   /* When the radio button is checked, change color and background color to $default_colour */
   /* Create the indicator (the dot/circle - hidden when not checked) */
@@ -129,28 +128,21 @@ li span {
 }
 .radio-container .radio-button-container input {
   position: absolute;
+  left: -14px;
+  top: 4px;
   opacity: 0;
+  margin: 0;
+  padding: 0;
   cursor: pointer;
 }
 .radio-container .radio-button-container span.checkmark {
   position: absolute;
   left: -20px;
-  top: 8px;
+  top: 3px;
   display: inline-block;
   height: 15px;
   width: 15px;
-  margin: 5px;
-  background-color: #E6D3AA;
-  border-radius: 50%;
-}
-.radio-container .radio-button-container span.checkmark {
-  position: absolute;
-  left: -20px;
-  top: 8px;
-  display: inline-block;
-  height: 15px;
-  width: 15px;
-  margin: 5px;
+  margin: 0 5px;
   background-color: #E6D3AA;
   border-radius: 50%;
 }
@@ -196,6 +188,16 @@ li span {
 }
 .review .review-text {
   font-style: italic;
+}
+.review.current {
+  background-color: #E6D3AA;
+}
+
+div.goodreads {
+  margin: 20px;
+}
+div.goodreads a {
+  display: inline-block;
 }
 
 /*# sourceMappingURL=styles.css.map */

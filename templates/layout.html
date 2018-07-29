@@ -6,7 +6,13 @@
     <link type= "text/css" rel = 'stylesheet' href="{{ url_for('static',filename='styles/styles.css') }}">
   </head>
   <body>
-    <div class='header'>{% block header %}{% endblock %}</div>
+    {%- block header -%}
+    <div class='header'>
+        <form action="{{ url_for('logout') }}">
+            <button>Log out</button>
+        </form>
+    </div>
+    {%- endblock -%}
     <h1>{% block heading %}{% endblock %}</h1>
     {% block body %}{% endblock %}
   </body>

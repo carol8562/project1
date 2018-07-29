@@ -2,11 +2,9 @@
 {%- block title -%}
   Book details
 {%- endblock -%}
-{% block header %}
-  <form action="{{ url_for('index') }}">
-      <button>Log out</button>
-  </form>
-{% endblock %}
+{%- block headier -%}
+  {{ super() }}
+{%- endblock -%}
 {%- block heading -%}
   Greatreads&mdash;Book details
 {%- endblock -%}
@@ -19,33 +17,34 @@
       <li>ISBN: <span>{{ book[0] }}</span></li>
     </ul>
   </div>
+  {% if user_has_not_reviewed_book %}
   <form action="{{ url_for('book', isbn=book[0]) }}" method="post">
     <div class="info">
       Choose a star rating for <i>{{ book[1] }}</i> by {{ book[2] }}
     </div>
     <div class="form-group radio-container">
       <label class="radio-button-container">
-        <input type="radio" name="radio">
+        <input type="radio" name="stars" value=1>
         <span class="checkmark"></span>
         <span>&#x2605;</span>
       </label>
       <label class="radio-button-container">
-        <input type="radio" name="radio">
+        <input type="radio" name="stars" value=2>
         <span class="checkmark"></span>
         <span>&#x2605;&#x2605;</span>
       </label>
       <label class="radio-button-container">
-        <input type="radio" name="radio">
+        <input type="radio" name="stars" value=3>
         <span class="checkmark"></span>
         <span>&#x2605;&#x2605;&#x2605;</span>
       </label>
       <label class="radio-button-container">
-        <input type="radio" name="radio">
+        <input type="radio" name="stars" value=4>
         <span class="checkmark"></span>
         <span>&#x2605;&#x2605;&#x2605;&#x2605;</span>
       </label>
       <label class="radio-button-container">
-        <input type="radio" name="radio">
+        <input type="radio" name="stars" value=5>
         <span class="checkmark"></span>
         <span>&#x2605;&#x2605;&#x2605;&#x2605;&#x2605;</span>
       </label>
@@ -57,12 +56,13 @@
       <button>Submit</button>
     </div>
   </form>
+  {% endif %}
 
   {%- if therearereviews -%}
 
-    <h2>Reviews</h2>
+    <h2>Greatreads Reviews</h2>
     {%- for review_result in review_results -%}
-      <div class="review">
+      <div class="review {% if review_result['reviewer_is_user'] %}current{% endif %}">
         <div class="review-headline">
           <span class="review-stars">
             {%- for i in range(review_result.review.stars) -%}
@@ -82,5 +82,11 @@
     {%- endfor -%}
 
   {%- endif -%}
-  <a class="return" href="{{ url_for('loginorsignup', login=login) }}">Return to {{"login" if login else "signup"}} page</a>
+  {% if res %}
+  <div class="goodreads">
+    <a href="">Goodreads</a> average rating {{ average_rating }} over {{ ratings_count }} ratings
+  </div>
+  {%- endif -%}
+
+  <a class="return" href="{{ url_for('search_results') }}">Return to search results page</a>
 {% endblock %}

@@ -13,9 +13,9 @@ $shadow_colour: rgba(129, 65, 18, 0.4);
   justify-content: center;
 }
 
-%pad-no-margin {
+%std-pad-margin {
   padding: 8px;
-  margin: 0;
+  margin: 0 10px;
 }
 
 %round-brown-border {
@@ -96,7 +96,7 @@ div.info {
   margin: 20px;
   a {
     display: block;
-    @extend %pad-no-margin;
+    @extend %std-pad-margin;
     @extend %round-brown-border;
     @extend %background-gradient;
   }
@@ -109,7 +109,7 @@ div.info {
 }
 
 form button {
-  @extend %pad-no-margin;
+  @extend %std-pad-margin;
 }
 
 h1, h2 {
@@ -136,7 +136,7 @@ li span {
   .radio-button-container {
     position: relative;
     display: flex;
-    padding: 10px 5px;
+    padding: 0 5px;
     margin: 0 10px;
     cursor: pointer;
     font-size: 70%;
@@ -148,34 +148,25 @@ li span {
     /* Hide the browser's default radio button */
     input {
       position: absolute;
+      left: -14px;
+      top: 4px;
       opacity: 0;
+      margin: 0;
+      padding: 0;
       cursor: pointer;
     }
 
     /* Create a custom radio button */
     span.checkmark {
-        position: absolute;
-        left: -20px;
-        top: 8px;
-        display: inline-block;
-        height: 15px;
-        width: 15px;
-        margin: 5px;
-        background-color: $lighter_colour;
-        border-radius: 50%;
-    }
-
-    /* Create a custom radio button */
-    span.checkmark {
-        position: absolute;
-        left: -20px;
-        top: 8px;
-        display: inline-block;
-        height: 15px;
-        width: 15px;
-        margin: 5px;
-        background-color: $lighter_colour;
-        border-radius: 50%;
+      position: absolute;
+      left: -20px;
+      top: 3px;
+      display: inline-block;
+      height: 15px;
+      width: 15px;
+      margin: 0 5px;
+      background-color: $lighter_colour;
+      border-radius: 50%;
     }
 
     /* On mouse-over, darken color and background color */
@@ -233,5 +224,15 @@ li span {
   }
   .review-text {
     font-style: italic;
+  }
+  &.current {
+    background-color: $lighter_colour;
+  }
+}
+
+div.goodreads {
+  margin: 20px;
+  a {
+    display: inline-block;
   }
 }

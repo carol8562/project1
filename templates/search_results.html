@@ -1,21 +1,20 @@
 {% extends "layout.html" %}
 {% block title %}Book search{% endblock %}
-{% block header %}
-  <form action="{{ url_for('index') }}">
-      <button>Log out</button>
-  </form>
-{% endblock %}
 {% block heading %}
   Greatreads Book Search Results
 {% endblock %}
+{%- block headier -%}
+  {{ super() }}
+{%- endblock -%}
 {% block body %}
   <ul>
     {% for result in results %}
       <li>
-        <a href = "{{ url_for('book', isbn=result[0])}}">
+        <a href = "{{ url_for('book', isbn=result.isbn)}}">
           {{ result.title }} by {{ result.author }} ({{ result.pub_year }}), ISBN: {{ result.isbn }}
         </a>
       </li>
     {% endfor %}
-  <ul>
+  </ul>
+  <a class="return" href="{{ url_for('search') }}">Return to search page</a>
 {% endblock %}
