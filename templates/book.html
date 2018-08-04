@@ -82,7 +82,7 @@
     {%- endfor -%}
 
   {%- endif -%}
-  {% if res %}
+  {% if there_are_goodreads_ratings %}
   <div class="goodreads">
     <a href="">Goodreads</a> average rating {{ average_rating }} over {{ ratings_count }} ratings
   </div>

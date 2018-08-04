@@ -1,7 +1,7 @@
 import os
 import requests
 
-from flask import Flask, redirect, render_template, request, session, url_for
+from flask import Flask, jsonify, redirect, render_template, request, session, url_for
 from flask_session import Session
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
@@ -56,7 +56,7 @@ def login(login):
         if login:
             return render_template("error.html", message="Please check your username", login=login)
         else:
-            db.execute("INSERT INTO users (name, password, loggedin) VALUES (:name, :password, TRUE)", {"name":name, "password":password})
+            db.execute("INSERT INTO users (name, password) VALUES (:name, :password)", {"name":name, "password":password})
             db.commit()
             checked_userid = db.execute("SELECT id FROM users WHERE name=:name AND password=:password", {"name":name, "password":password}).fetchone()
     else:
@@ -66,8 +66,6 @@ def login(login):
             checked_userid = db.execute("SELECT id FROM users WHERE name=:name AND password=:password", {"name":name, "password":password}).fetchone()
             if checked_userid == None:
                 return render_template("error.html", message="Please check your password", login=login)
-            db.execute("UPDATE users SET loggedin = TRUE WHERE id=:id", {"id": checked_userid.id })
-            db.commit()
     if checked_userid == None:
         return render_template("error.html", message="Could not log you in. Please try again", login=login)
     else:
@@ -77,8 +75,6 @@ def login(login):
 @app.route("/logout")
 def logout():
     """ Logs out user and returns to front page """
-    db.execute("UPDATE users SET loggedin = FALSE WHERE id =  :id", {"id": session['userid'] })
-    db.commit()
     session['userid'] = None;
     return render_template("index.html")
 
@@ -149,16 +145,42 @@ def book(isbn):
         review_results.append({"review":review, "reviewer":reviewer.name, "reviewer_is_user":(reviewer.id == session['userid'])})
         if reviewer.id == session['userid']:
             user_has_reviewed_book = True
-    res = requests.get("https://www.goodreads.com/book/review_counts.json", params={"key":"6sl95IxA5KZkDqbRBkB9vQ", "isbns": "163216814"})
-    if res != "<Response [404]>":
+    res = requests.get("https://www.goodreads.com/book/review_counts.json", params={"key":"6sl95IxA5KZkDqbRBkB9vQ", "isbns": isbn})
+    if res.status_code != 404:
         average_rating = res.json()['books'][0]['average_rating']
         ratings_count = format(res.json()['books'][0]['ratings_count'], ',d')
+        there_are_goodreads_ratings = True
     else:
-        print(res)
-        average_rating = 0
-        ratings_count = 0
-    return render_template("book.html", book=book, therearereviews=(len(reviews) > 0), review_results=review_results, user_has_not_reviewed_book=not user_has_reviewed_book, average_rating=average_rating, ratings_count=ratings_count)
+        average_rating = None
+        ratings_count = None
+        there_are_goodreads_ratings = False
+    return render_template("book.html", book=book, therearereviews=(len(reviews) > 0), review_results=review_results, user_has_not_reviewed_book=not user_has_reviewed_book, average_rating=average_rating, ratings_count=ratings_count, there_are_goodreads_ratings=there_are_goodreads_ratings)
 
 def find_reviews(isbn):
     results = db.execute("SELECT review, userid, stars FROM reviews WHERE isbn=:isbn", {"isbn":isbn}).fetchall()
     return results
+
+@app.route("/api/<string:isbn>")
+def book_api(isbn):
+    """Return details about a single book"""
+    # Make sure book exists
+    book = db.execute("SELECT * FROM books WHERE isbn=:isbn", {"isbn":isbn}).fetchone()
+    if book is None:
+        return jsonify("error", f"No book exists with ISBN { isbn }"), 404
+    reviews = find_reviews(isbn)
+    review_count = len(reviews)
+    average_score = 0
+    if review_count > 0:
+        for review in reviews:
+            average_score += review.stars
+        average_score /= review_count
+        average_score =  round(average_score, 1)
+    # Get all passengers
+    return jsonify({
+        "title": book.title,
+        "author": book.author,
+        "year": book.pub_year,
+        "isbn": isbn,
+        "review_count": review_count,
+        "average_score": average_score
+    })

@@ -24,7 +24,7 @@ for isbn, title, author, pub_year in reader:
         print(f"Error inserting '{ title }' by { author } into database. It is probably already there.")
 db.commit()
 
-db.execute("CREATE TABLE IF NOT EXISTS users (id SERIAL PRIMARY KEY, name VARCHAR UNIQUE NOT NULL, password VARCHAR NOT NULL, loggedin BOOLEAN NOT NULL)")
+db.execute("CREATE TABLE IF NOT EXISTS users (id SERIAL PRIMARY KEY, name VARCHAR UNIQUE NOT NULL, password VARCHAR NOT NULL)")
 db.commit()
 
 db.execute("CREATE TABLE IF NOT EXISTS reviews (id SERIAL PRIMARY KEY, isbn VARCHAR NOT NULL, userid INTEGER NOT NULL, review VARCHAR NOT NULL, stars INT NOT NULL)")
