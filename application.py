@@ -25,11 +25,11 @@ db = scoped_session(sessionmaker(bind=engine))
 def index():
     return render_template("index.html")
 
-@app.route("/loginorsignup/<int:login>")
-def loginorsignup(login):
+@app.route("/log_in_or_sign_up/<int:login>")
+def log_in_or_sign_up(login):
     """ Presents a login page or a signup page """
     """ depending on whether or not 'login' is True """
-    return render_template("loginorsignup.html", login=login)
+    return render_template("log_in_or_sign_up.html", login=login)
 
 @app.route("/login/<int:login>", methods=["POST"])
 def login(login):
@@ -48,29 +48,29 @@ def login(login):
         if password_invalid:
             message += "a valid password"
         message += "."
-        return render_template("error.html", message=message, login=login)
+        return render_template("error.html", message=message, logging_in=True, login=login)
     # Look up user in database and react appropriately
     # depending on whether the user has chosen to log in or to sign up
     user = db.execute("SELECT * FROM users WHERE name=:name", {"name":name}).fetchone()
     if user == None:
         if login:
-            return render_template("error.html", message="Please check your username", login=login)
+            return render_template("error.html", message="Please check your username", logging_in=True, login=login)
         else:
             db.execute("INSERT INTO users (name, password) VALUES (:name, :password)", {"name":name, "password":password})
             db.commit()
             checked_userid = db.execute("SELECT id FROM users WHERE name=:name AND password=:password", {"name":name, "password":password}).fetchone()
     else:
         if not login:
-            return render_template("error.html", message="Please choose another username", login=login)
+            return render_template("error.html", message="Please choose another username", logging_in=True, login=login)
         else:
             checked_userid = db.execute("SELECT id FROM users WHERE name=:name AND password=:password", {"name":name, "password":password}).fetchone()
             if checked_userid == None:
-                return render_template("error.html", message="Please check your password", login=login)
+                return render_template("error.html", message="Please check your password", logging_in=True, login=login)
     if checked_userid == None:
-        return render_template("error.html", message="Could not log you in. Please try again", login=login)
+        return render_template("error.html", message="Could not log you in. Please try again", logging_in=True, login=login)
     else:
         session['userid'] = checked_userid.id;
-    return redirect(url_for('search'))
+    return redirect(url_for('search', alert_info='0,""'))
 
 @app.route("/logout")
 def logout():
@@ -78,15 +78,19 @@ def logout():
     session['userid'] = None;
     return render_template("index.html")
 
-@app.route("/search")
-def search():
-    return render_template("search.html")
+@app.route("/search/<string:alert_info>")
+def search(alert_info):
+    alert_list = alert_info.split(',')
+    alert_should_be_visible = int(alert_list[0])
+    alert_text = alert_list[1]
+    print(f"alert_should_be_visible={alert_should_be_visible}, alert_text={alert_text}")
+    return render_template("search.html", alert_should_be_visible=alert_should_be_visible, alert_text=alert_text)
 
 @app.route("/search_results", methods=["GET", "POST"])
 def search_results():
     if request.method == "POST":
         """ Lists all books satisfying search criteria on search.html """
-        """ Presents an error message if no books found """
+        """ Presents an alert if no books found """
         isbn = request.form.get("isbn")
         author = request.form.get("author")
         title = request.form.get("title")
@@ -94,7 +98,7 @@ def search_results():
         author_isblank = author == None or author == ""
         title_isblank = title == None or title == ""
         if (isbn_isblank and author_isblank and title_isblank):
-            return render_template("error.html", message="Please enter at least one search criterion", login = 1)
+            return redirect(url_for('search', alert_info="1,Please enter at least one search criterion"))
         query = "SELECT * FROM books WHERE "
         if not isbn_isblank:
             isbn = f"%{ isbn }%"
@@ -115,7 +119,8 @@ def search_results():
     else:
         results = session['results']
     if results == None or len(results) == 0:
-        return render_template("error.html", message="No books were found matching your search criteria", login=1)
+        message = '1,No books were found matching your search criteria'
+        return redirect(url_for('search', alert_info=message))
     else:
         return render_template("search_results.html", results=results)
 
@@ -125,13 +130,13 @@ def book(isbn):
     # Make sure book exists
     book = db.execute("SELECT * FROM books WHERE isbn=:isbn", {"isbn":isbn}).fetchone()
     if book is None:
-        return render_template("error.html", message=f"No book exists with ISBN { isbn }", login=1)
+        return redirect(url_for('search', alert_info=f"1,No book exists with ISBN { isbn }"))
     if request.method == "POST":
         review = request.form.get("review")
         stars = request.form.get("stars")
         alreadyreviewed = db.execute("SELECT count( * ) FROM reviews WHERE isbn=:isbn AND userid=:userid", {"isbn":isbn, "userid":session["userid"]}).fetchone()[0]
         if alreadyreviewed:
-            return render_template("error.html", message=f"You have already reviewed { book[1] } by { book[2] }", login=1)
+            return redirect(url_for('search', alert_info=f"1,You have already reviewed { book[1] } by { book[2] }"))
         else:
             db.execute("INSERT INTO reviews (isbn, userid, review, stars) VALUES (:isbn, :userid, :review, :stars)", {"isbn":isbn, "userid":session["userid"], "review":review, "stars":stars})
             db.commit()
@@ -166,7 +171,7 @@ def book_api(isbn):
     # Make sure book exists
     book = db.execute("SELECT * FROM books WHERE isbn=:isbn", {"isbn":isbn}).fetchone()
     if book is None:
-        return jsonify("error", f"No book exists with ISBN { isbn }"), 404
+        return jsonify("error", f"No book exists in our database with ISBN { isbn }"), 404
     reviews = find_reviews(isbn)
     review_count = len(reviews)
     average_score = 0

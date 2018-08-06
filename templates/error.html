@@ -5,5 +5,9 @@
   <div class="container">
     {{ message }}
   </div>
-  <a class="return" href="{{ url_for('loginorsignup', login=login) }}">Return to {{"login" if login else "signup"}} page</a>
+  {% if logging_in %}
+    <a class="return" href="{{ url_for('log_in_or_sign_up', login=login) }}">
+      Return to {{"login" if login else "signup"}} page
+    </a>
+  {% endif %}
 {% endblock %}

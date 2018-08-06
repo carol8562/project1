@@ -3,6 +3,7 @@ $light_colour: #D3A469;
 $lighter_colour: #E6D3AA;
 $link_colour: #1074B9;
 $shadow_colour: rgba(129, 65, 18, 0.4);
+$warning_colour: rgba(227, 118, 43, 0.4);
 
 %background-gradient {
   background: linear-gradient($light_colour, $lighter_colour);
@@ -13,9 +14,9 @@ $shadow_colour: rgba(129, 65, 18, 0.4);
   justify-content: center;
 }
 
-%std-pad-margin {
-  padding: 8px;
-  margin: 0 10px;
+%end-flex {
+  display: flex;
+  justify-content: flex-end;
 }
 
 %round-brown-border {
@@ -31,6 +32,18 @@ $shadow_colour: rgba(129, 65, 18, 0.4);
   box-shadow: 4px 4px 4px $shadow_colour;
   -moz-box-shadow: 4px 4px 4px $shadow_colour;
   -webkit-box-shadow: 4px 4px 4px $shadow_colour;
+}
+
+%std-pad-margin {
+  padding: 8px;
+  margin: 0 10px;
+}
+
+%std-shape {
+  display:block;
+  color: $default_colour;
+  padding: 10px 5px;
+  @extend %round-brown-border;
 }
 
 * {
@@ -74,8 +87,7 @@ button:focus, form button:hover, .form-control:focus, .form-group a:focus, .form
 }
 
 div.header {
-  display: flex;
-  justify-content: flex-end;
+  @extend %end-flex;
 }
 
 div.info {
@@ -84,25 +96,60 @@ div.info {
 }
 
 .form-control {
-  display:block;
-  width: 100%;
-  color: $default_colour;
+  @extend %std-shape;
   background-color: $lighter_colour;
-  padding: 10px 5px;
-  @extend %round-brown-border;
 }
 
 .form-group {
   margin: 20px;
+
   a {
     display: block;
     @extend %std-pad-margin;
     @extend %round-brown-border;
-    @extend %background-gradient;
+    @exdtend %background-gradient;
   }
+
+  .alert {
+    @extend %std-shape;
+    width: auto;
+    background-color: $warning_colour;
+
+    a {
+      padding: 2px 10px;
+      border: none;
+      background: inherit;
+    }
+
+    .alert-cross-container {
+      @extend %end-flex;
+    }
+
+    div {
+      text-align: center;
+    }
+  }
+
+  .alert:focus {
+    outline: none;
+    box-shadow: 0 0 0 0;
+    -webkit-box-shadow:  0 0 0 0 white;
+  }
+
+  .alert a:focus, .alert a:hover {
+    box-shadow: 0 0 0 0;
+    -webkit-box-shadow:  0 0 0 0 white;
+    color: $light_colour;
+  }
+
   .container:first-of-type {
     margin-top: 50px;
   }
+
+  input, textarea {
+    width: 100%;
+  }
+
   textarea {
     padding: 10px;
   }
